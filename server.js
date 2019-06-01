@@ -4,6 +4,7 @@ const {ObjectID}=require('mongodb');
 const {mongoose}=require('./db/mongoose.js');
 const {Order}=require('./models/order.js');
 const {User}=require('./models/user.js');
+const {Coupon} = require('./models/coupon.js');
 const mailer = require('./mail/mailer');
 const mailOptions = require('./mail/mailOptions');
 const {Url}=require('./constants/stringConstants.js');
@@ -79,19 +80,21 @@ app.post('/order',(req,res)=>{
 
 // coupon code mail
 app.post('/sendCouponMail',(req,res)=>{
+	var couponCode = req.body.code;
 	var email = req.body.email;
-	var coupon = req.body.coupon;
+	var name = req.body.name;
+	var userEmail;
 	console.log(req.body);
-	//find target user
-	User.findOne({
-		email:email
+	//find coupon & target user
+	Coupon.findOne({
+		code : couponCode
 	})
-	.then((user)=>{
-			console.log(user)
-			var name = user.u_name;
-			mailOptions.couponMailOptions(email, name, coupon).then((options)=>{
+	.then((coupon)=>{
+		console.log(coupon);
+		mailOptions.couponMailOptions(email, name, coupon).then((options)=>{
 				console.log("------------in post route-------------------")
 				console.log(options);
+				//mailer
 				mailer(options);
 						res.json({
 							"status": "success",

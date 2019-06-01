@@ -11,8 +11,10 @@ exports.couponMailOptions = function(ToSend, ToSendName, coupon) {
         var couponMail = path.join(process.cwd(),'views','couponMail.ejs');
         console.log(couponMail);
             ejs.renderFile(couponMail, {
-                "name": "neha",
-                "code": "12345" 
+                "name": ToSendName,
+                "code": coupon.code,
+                "usedBy": coupon.expiry_date,
+                "discount": coupon.discount
             }, function (err, data) {
                 if (err) {
                     console.log(err);
@@ -39,7 +41,7 @@ exports.orderDetMailOptions = function(ToSend, ToSendName, order) {
     return new Promise (function(resolve,reject){
                  var address; //order delivery address
                 if(order.del_mode == "access_points"){
-                    address = order.access_pt_address;
+                    address = order.access_pt_address.address;
                 }
                 else{
                     address = order.address.h_no+" "+order.address.street+" "+order.address.city+" "+order.address.state;
@@ -63,7 +65,7 @@ exports.orderDetMailOptions = function(ToSend, ToSendName, order) {
                                 resolve({
                                     from: config.sendAddr, // sender address
                                     to: ToSend,// list of receivers
-                                    subject: 'Coupon Code', // Subject line
+                                    subject: 'OrderDetails', // Subject line
                                     text: 'Hello world?', // plain text body
                                     html:  data // html body
                                 });
