@@ -2,10 +2,6 @@ const express=require('express');
 const bodyParser=require('body-parser');
 const {ObjectID}=require('mongodb');
 const {mongoose}=require('./db/mongoose.js');
-
-const {Coupon} = require('./models/coupon.js');
-const mailer = require('./mail/mailer');
-const mailOptions = require('./mail/mailOptions');
 const mailRoutes = require('./routes/mail');
 const {Url}=require('./constants/stringConstants.js');
 const path = require('path');
@@ -18,6 +14,7 @@ var app=express();
 app.set('views', path.join(__dirname,'views'));
 app.set('view engine', 'ejs');
 
+//db connection
 var db = mongoose.connection;
 
 db.once('open', function(){
