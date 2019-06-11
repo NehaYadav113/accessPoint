@@ -2,9 +2,7 @@
 <container>
 
   <spacer size="16"></spacer>
-      <h1>Hi, <%= name %></h1>
-      <p class="lead">A Big Surprise For You</p>
-      <p>Avail <%= discount %>% discount on your order using coupon code <%= code %>  on choosing Access Points as your delivery mode while ordering from Amazon</p>
-      <p> You can use this code to get discount by <%= usedBy %> after getting this mail</p>
-  
+      <h1><%= content.GREETING %>, <%= name %></h1>
+      <p><%= content.MESSAGE_INTRO%></p>
+      <p><%= discount %>% <%= content.DISCOUNT_INFO%> <%= code %> <%=content.MESSAGE %>  <%= usedBy %></p>
 </container>

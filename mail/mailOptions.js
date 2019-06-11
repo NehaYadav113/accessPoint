@@ -6,15 +6,17 @@ var exports = module.exports = {};
 
 
 // coupon code mail options
-exports.couponMailOptions = function(ToSend, ToSendName, coupon) {
+exports.couponMailOptions = function(ToSend, ToSendName, coupon, language) {
     return new Promise (function(resolve,reject){
+        const {CouponContent} = require('./../constants/'+language);
         var couponMail = path.join(process.cwd(),'views','couponMail.ejs');
         console.log(couponMail);
             ejs.renderFile(couponMail, {
                 "name": ToSendName,
                 "code": coupon.code,
                 "usedBy": coupon.expiry_date,
-                "discount": coupon.discount
+                "discount": coupon.discount,
+                content: CouponContent
             }, function (err, data) {
                 if (err) {
                     console.log(err);
@@ -37,9 +39,10 @@ exports.couponMailOptions = function(ToSend, ToSendName, coupon) {
 };
 
 //order details mail options
-exports.orderDetMailOptions = function(ToSend, ToSendName, order) {
+exports.orderDetMailOptions = function(ToSend, ToSendName, order, language) {
     return new Promise (function(resolve,reject){
                  var address; //order delivery address
+                 const {OrderDetailContent} = require('./../constants/'+language);
                 if(order.del_mode == "access_points"){
                     address = order.access_pt_address.address;
                 }
@@ -52,7 +55,8 @@ exports.orderDetMailOptions = function(ToSend, ToSendName, order) {
                      "price": order.price,
                      "delDate": order.del_date,
                      "delMode": order.del_mode,
-                     "delAddress": address 
+                     "delAddress": address,
+                      content: OrderDetailContent
                  }, function (err, data){
                        if (err) {
                             console.log(err);

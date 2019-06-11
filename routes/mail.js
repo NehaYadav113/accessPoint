@@ -60,6 +60,10 @@ router.post('/sendCouponMail',(req,res)=>{
 	var couponCode = req.body.code;
 	var email = req.body.email;
 	var name = req.body.name;
+	var language = req.body.language;
+	if(language==null){
+		language = 'English';
+	}
 	var userEmail;
 	console.log(req.body);
 	//find coupon & target user
@@ -68,7 +72,7 @@ router.post('/sendCouponMail',(req,res)=>{
 	})
 	.then((coupon)=>{
 		console.log(coupon);
-		mailOptions.couponMailOptions(email, name, coupon).then((options)=>{
+		mailOptions.couponMailOptions(email, name, coupon, language).then((options)=>{
 				console.log("------------in post route-------------------")
 				console.log(options);
 				//mailer
@@ -89,6 +93,10 @@ router.post('/sendCouponMail',(req,res)=>{
 //mail when new order created
 router.post('/OrderDetMail',(req,res)=>{
 	var orderId = req.body._id;
+	var language = req.body.language;
+	if(language==null){
+		language = 'English';
+	}
     console.log(orderId);
 	var order ;
 	Order.findOne({
@@ -106,7 +114,7 @@ router.post('/OrderDetMail',(req,res)=>{
 	.then((user)=>{
 		var name = user.u_name;
 		var email = user.email;
-		mailOptions.orderDetMailOptions(email, name, order).then((options)=>{
+		mailOptions.orderDetMailOptions(email, name, order, language).then((options)=>{
 				console.log("------------in post route-------------------")
 				console.log(options);
 				//mailer

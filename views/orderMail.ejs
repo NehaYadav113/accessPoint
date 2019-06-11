@@ -2,13 +2,13 @@
 <container>
 
   <spacer size="16"></spacer>
-      <h2>Hi, <%= name %></h2>
-      <h4 class="lead">You have just placed an order. Your order details are: </h4>
-      <p>Order Id: <%= orderId %></p>
-      <p>Price: <%= price %></p>
-      <p>Delivered Date: <%= delDate %></p>
-      <p>Your Delivery Mode: <%= delMode %></p>
-      <p>Delivering Address: <%= delAddress %></p>
+      <h2><%= content.GREETING%> <%= name %></h2>
+      <h4 ><%= content.MESSAGE%></h4>
+      <p><%= content.ORDER_ID%> <%= orderId %></p>
+      <p><%= content.PRICE%> <%= price %></p>
+      <p><%= content.DELIVERING_DATE%> <%= delDate %></p>
+      <p><%= content.DELIVERY_MODE%> <%= delMode %></p>
+      <p><%= content.DELIVERING_ADDRESS%> <%= delAddress %></p>
 
   
 </container>
